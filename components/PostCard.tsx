@@ -1,8 +1,8 @@
 // components/PostCard.tsx
-import { urlFor } from '@/lib/image'
 import Link from 'next/link'
+import { urlFor } from '@/lib/image'
 
-type PostCardProps = {
+type Props = {
   p: {
     slug: string
     title: string
@@ -11,12 +11,9 @@ type PostCardProps = {
   }
 }
 
-export default function PostCard({ p }: PostCardProps) {
+export default function PostCard({ p }: Props) {
   return (
-    <Link
-      href={`/blog/${p.slug}`}
-      className="block border rounded-lg overflow-hidden hover:shadow-sm"
-    >
+    <article className="border rounded-lg overflow-hidden hover:shadow-sm">
       {p.mainImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -27,11 +24,15 @@ export default function PostCard({ p }: PostCardProps) {
       ) : null}
 
       <div className="p-4">
-        <h3 className="text-lg font-medium">{p.title}</h3>
+        <h3 className="text-lg font-medium">
+          <Link href={`/blog/${p.slug}`} className="hover:underline">
+            {p.title}
+          </Link>
+        </h3>
         {p.excerpt ? (
           <p className="text-sm text-gray-600 mt-1 line-clamp-3">{p.excerpt}</p>
         ) : null}
       </div>
-    </Link>
+    </article>
   )
 }
